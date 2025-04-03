@@ -1,9 +1,11 @@
 
 import axios from 'axios';
-const DEPLOYED='https://e-commerce-server-production-0873.up.railway.app'
-const LOCALHOST='http://localhost:5454'
+// const DEPLOYED='https://e-commerce-server-production-0873.up.railway.app'
+// const LOCALHOST='http://localhost:5454'
 
-export const API_BASE_URL = LOCALHOST
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5454';
+
+export const API_BASE_URL = BACKEND_URL;
 
 const api = axios.create({
   baseURL: API_BASE_URL,
