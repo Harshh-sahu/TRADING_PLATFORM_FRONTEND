@@ -43,7 +43,7 @@ const TransferForm = () => {
           onChange={handleChange}
           value={formData.amount}
           className="py-7"
-          placeholder="$9999"
+          placeholder="₹9999"
         />
       </div>
       <div>

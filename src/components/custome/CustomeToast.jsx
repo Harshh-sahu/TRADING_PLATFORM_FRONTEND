@@ -1,11 +1,12 @@
 // Toast.js
 import React, { useEffect, useState } from 'react';
 
-const CustomeToast = ({ message, show, onClose }) => {
+const CustomeToast = ({ message, show, onClose, type = "error" }) => {
     const [showToast, setShowToast] = useState(false);
 
     const handleCloseToast = () => {
         setShowToast(false);
+        if (onClose) onClose();
       };
 
       
@@ -25,8 +26,10 @@ const CustomeToast = ({ message, show, onClose }) => {
 
   if (!showToast) return null;
 
+  const bgColor = type === "success" ? "bg-green-600" : "bg-red-600";
+
   return (
-    <div className="fixed top-4 right-4 bg-red-600 text-white px-4 py-2 rounded shadow-lg">
+    <div className={`fixed top-4 right-4 ${bgColor} text-white px-4 py-2 rounded shadow-lg z-[100]`}>
       {message}
     </div>
   );

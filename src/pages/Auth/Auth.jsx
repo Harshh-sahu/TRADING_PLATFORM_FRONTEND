@@ -42,9 +42,6 @@ const Auth = () => {
     setShowToast(true);
   };
 
-console.log("---------- ",auth.error)
-
-
   return (
     <div className={`authContainer h-screen relative`}>
       <div className="absolute top-0 right-0 left-0 bottom-0 bg-[#030712] bg-opacity-50"></div>
@@ -52,7 +49,7 @@ console.log("---------- ",auth.error)
       <div
         className={`bgBlure absolute top-1/2 left-1/2 transform -translate-x-1/2  -translate-y-1/2 box flex flex-col justify-center items-center  h-[35rem] w-[30rem]  rounded-md z-50 bg-black bg-opacity-50 shadow-2xl shadow-white`}
       >
-         <CustomeToast show={auth.error} message={auth.error?.error}/>
+         <CustomeToast show={Boolean(auth.error?.error)} message={auth.error?.error}/>
      
 
         <h1 className="text-6xl font-bold pb-9">Trading Platform</h1>

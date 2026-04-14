@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchCoinDetails,
   fetchCoinList,
-  fetchTreadingCoinList,
+  fetchTradingCoinList,
   getTop50CoinList,
 } from "@/Redux/Coin/Action";
 import {
@@ -38,6 +38,19 @@ import { sendMessage } from "@/Redux/Chat/Action";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import SpinnerBackdrop from "@/components/custome/SpinnerBackdrop";
 
+const formatAmount = (value) =>
+  value === null || value === undefined || value === ""
+    ? "-"
+    : Number(value).toLocaleString("en-US", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2,
+      });
+
+const formatPercentage = (value) =>
+  value === null || value === undefined || value === ""
+    ? "-"
+    : Number(value).toFixed(2);
+
 const Home = () => {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
@@ -61,7 +74,7 @@ const Home = () => {
     if (category == "top50") {
       dispatch(getTop50CoinList());
     }else if( category == "trading"){
-      dispatch(fetchTreadingCoinList())
+      dispatch(fetchTradingCoinList())
     }
   }, [category]);
 
@@ -207,7 +220,7 @@ const Home = () => {
               </div>
               <div className="flex items-end gap-2">
                 <p className="text-xl font-bold">
-                  {coin.coinDetails?.market_data.current_price.usd}
+                  {formatAmount(coin.coinDetails?.market_data.current_price.usd)}
                 </p>
                 <p
                   className={`${
@@ -217,13 +230,15 @@ const Home = () => {
                   }`}
                 >
                   <span className="">
-                    {coin.coinDetails?.market_data.market_cap_change_24h}
+                    {formatAmount(coin.coinDetails?.market_data.market_cap_change_24h)}
                   </span>
                   <span>
                     (
                     {
-                      coin.coinDetails?.market_data
-                        .market_cap_change_percentage_24h
+                      formatPercentage(
+                        coin.coinDetails?.market_data
+                          .market_cap_change_percentage_24h
+                      )
                     }
                     %)
                   </span>

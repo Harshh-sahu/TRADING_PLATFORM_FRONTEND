@@ -27,7 +27,7 @@ const TwoFactorAuth = () => {
   }
   return (
     <div>
-      <CustomeToast show={auth.error} message={auth.error?.error}/>
+      <CustomeToast show={Boolean(auth.error?.error)} message={auth.error?.error}/>
       <div className="flex flex-col gap-5 h-screen justify-center items-center">
         {" "}
         

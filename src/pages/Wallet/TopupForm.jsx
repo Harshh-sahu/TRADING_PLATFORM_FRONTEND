@@ -36,7 +36,7 @@ const TopupForm = () => {
           onChange={handleChange}
           value={amount}
           className="py-7 text-lg"
-          placeholder="$9999"
+          placeholder="₹9999"
         />
       </div>
 

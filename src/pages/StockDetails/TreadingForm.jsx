@@ -2,20 +2,24 @@ import { getAssetDetails } from "@/Redux/Assets/Action";
 import { payOrder } from "@/Redux/Order/Action";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { DialogClose } from "@/components/ui/dialog";
+import CustomeToast from "@/components/custome/CustomeToast";
 
 import { Input } from "@/components/ui/input";
 import { DotIcon } from "@radix-ui/react-icons";
-import { DollarSign } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-const TreadingForm = () => {
+const TradingForm = () => {
   const { coin, asset, wallet } = useSelector((store) => store);
   const [quantity, setQuantity] = useState(0);
   const [amount, setAmount] = useState(0);
   const dispatch = useDispatch();
   const [orderType, setOrderType] = useState("BUY");
+  const [tradeToast, setTradeToast] = useState({
+    show: false,
+    type: "success",
+    message: "",
+  });
 
   const handleOnChange = (e) => {
     const amount = e.target.value;
@@ -35,7 +39,8 @@ const TreadingForm = () => {
     return volume.toFixed(decimalPlaces);
   }
 
-  const handleBuyCrypto = () => {
+  const handleBuyCrypto = async () => {
+    try {
     dispatch(
       payOrder({
         jwt: localStorage.getItem("jwt"),
@@ -47,6 +52,18 @@ const TreadingForm = () => {
         },
       })
     );
+      setTradeToast({
+        show: true,
+        type: "success",
+        message: `${orderType === "BUY" ? "Buy" : "Sell"} order placed successfully.`,
+      });
+    } catch (error) {
+      setTradeToast({
+        show: true,
+        type: "error",
+        message: error?.response?.data?.message || "Failed to place order. Please try again.",
+      });
+    }
   };
 
   useEffect(()=>{
@@ -57,6 +74,12 @@ const TreadingForm = () => {
 
   return (
     <div className="space-y-10 p-5">
+      <CustomeToast
+        show={tradeToast.show}
+        type={tradeToast.type}
+        message={tradeToast.message}
+        onClose={() => setTradeToast((prev) => ({ ...prev, show: false }))}
+      />
       <div>
         <div className=" flex gap-4 items-center justify-between">
           <Input
@@ -128,7 +151,7 @@ const TreadingForm = () => {
         <div>
           {orderType == "BUY" ? (
             <div className="flex items-center ">
-              <DollarSign />
+              <span className="text-2xl font-semibold mr-1">₹</span>
 
               <span className="text-2xl font-semibold">
                 {wallet.userWallet?.balance}
@@ -140,7 +163,6 @@ const TreadingForm = () => {
         </div>
       </div>
       <div className="">
-        <DialogClose className="w-full">
           <Button
           onClick={handleBuyCrypto}
           className={`w-full py-6 ${
@@ -157,7 +179,6 @@ const TreadingForm = () => {
         >
           {orderType}
         </Button>
-        </DialogClose>
         
 
         <Button
@@ -172,4 +193,4 @@ const TreadingForm = () => {
   );
 };
 
-export default TreadingForm;
+export default TradingForm;

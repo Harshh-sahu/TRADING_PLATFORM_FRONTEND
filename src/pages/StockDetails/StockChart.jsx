@@ -6,6 +6,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchMarketChart } from "@/Redux/Coin/Action";
 import SpinnerBackdrop from "@/components/custome/SpinnerBackdrop";
 
+const formatChartValue = (value) =>
+  value === null || value === undefined || value === ""
+    ? "0.00"
+    : Number(value).toFixed(2);
+
 const timeSeries = [
   {
     keyword: "DIGITAL_CURRENCY_DAILY",
@@ -77,6 +82,11 @@ const StockChart = ({ coinId }) => {
       //   min: new Date('01 Dec 2023').getTime(),
       tickAmount: 6,
     },
+    yaxis: {
+      labels: {
+        formatter: formatChartValue,
+      },
+    },
     colors: ["#758AA2"], // Line color
     markers: {
       colors: ["#fff"], // Dot color
@@ -87,6 +97,9 @@ const StockChart = ({ coinId }) => {
     },
     tooltip: {
       theme: "dark",
+      y: {
+        formatter: formatChartValue,
+      },
     },
     fill: {
       type: "gradient",

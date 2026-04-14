@@ -2,7 +2,7 @@ import { getUserWallet } from '@/Redux/Wallet/Action'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { ReloadIcon } from '@radix-ui/react-icons'
-import { DollarSignIcon, WalletIcon } from 'lucide-react'
+import { WalletIcon } from 'lucide-react'
 import { useDispatch, useSelector } from 'react-redux'
 
 const PaymentSuccess = () => {
@@ -36,7 +36,7 @@ const PaymentSuccess = () => {
           </CardHeader>
           <CardContent>
             <div className="flex items-center ">
-              <DollarSignIcon />
+              <span className="text-2xl font-semibold mr-1">₹</span>
 
               <span className="text-2xl font-semibold">
                 {wallet.userWallet?.balance}

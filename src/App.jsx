@@ -7,7 +7,7 @@ import StockDetails from "./pages/StockDetails/StockDetails";
 import Profile from "./pages/Profile/Profile";
 import Notfound from "./pages/Notfound/Notfound";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getUser } from "./Redux/Auth/Action";
 import Wallet from "./pages/Wallet/Wallet";
 import Watchlist from "./pages/Watchlist/Watchlist";
@@ -21,6 +21,7 @@ import WithdrawalAdmin from "./Admin/Withdrawal/WithdrawalAdmin";
 import Activity from "./pages/Activity/Activity";
 import SearchCoin from "./pages/Search/Search";
 import { shouldShowNavbar } from "./Util/shouldShowNavbar";
+import SpinnerBackdrop from "./components/custome/SpinnerBackdrop";
 
 
 const routes = [
@@ -41,10 +42,24 @@ const routes = [
 function App() {
   const {auth}=useSelector(store=>store);
   const dispatch=useDispatch();
+  const jwt = localStorage.getItem("jwt");
+  const [authChecked, setAuthChecked] = useState(!jwt);
 
   useEffect(()=>{
-dispatch(getUser(localStorage.getItem("jwt")))
+    if (!jwt) {
+      setAuthChecked(true);
+      return;
+    }
+
+    setAuthChecked(false);
+    dispatch(getUser(jwt)).finally(() => {
+      setAuthChecked(true);
+    });
   },[auth.jwt])
+
+  if (!authChecked) {
+    return <SpinnerBackdrop />;
+  }
 
   const showNavbar=!auth.user?false:shouldShowNavbar(location.pathname,routes,auth.user?.role)
 

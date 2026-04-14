@@ -28,13 +28,13 @@ const authReducer = (state = initialState, action) => {
       return { ...state, loading: true, error: null };
 
     case REGISTER_SUCCESS:
-      return { ...state, loading: false, jwt:action.payload };
+      return { ...state, loading: false, jwt:action.payload, error: null };
 
     case LOGIN_SUCCESS:
-      return { ...state, loading: false, jwt: action.payload };
+      return { ...state, loading: false, jwt: action.payload, error: null };
 
       case LOGIN_TWO_STEP_SUCCESS:
-      return { ...state, loading: false, jwt: action.payload };
+      return { ...state, loading: false, jwt: action.payload, error: null };
 
     case GET_USER_SUCCESS:
       return {
@@ -42,6 +42,7 @@ const authReducer = (state = initialState, action) => {
         loading: false,
         user: action.payload,
         fetchingUser: false,
+        error: null,
         
       };
 
@@ -56,7 +57,7 @@ const authReducer = (state = initialState, action) => {
       };
     case LOGOUT:
       localStorage.removeItem("jwt");
-      return { ...state, jwt: null, user: null };
+      return { ...state, jwt: null, user: null, error: null, loading: false };
     default:
       return state;
   }

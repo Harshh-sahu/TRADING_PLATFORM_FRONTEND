@@ -16,6 +16,19 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { BookmarkFilledIcon } from "@radix-ui/react-icons";
 
+const formatAmount = (value) =>
+  value === null || value === undefined || value === ""
+    ? "-"
+    : Number(value).toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
+
+const formatPercentage = (value) =>
+  value === null || value === undefined || value === ""
+    ? "-"
+    : Number(value).toFixed(2);
+
 const Watchlist = () => {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
@@ -63,8 +76,8 @@ const Watchlist = () => {
                   <span> {item.name}</span>
                 </TableCell>
                 <TableCell>{item.symbol.toUpperCase()}</TableCell>
-                <TableCell>{item.total_volume}</TableCell>
-                <TableCell>{item.market_cap}</TableCell>
+                <TableCell>{formatAmount(item.total_volume)}</TableCell>
+                <TableCell>{formatAmount(item.market_cap)}</TableCell>
                 <TableCell
                   className={`${
                     item.market_cap_change_percentage_24h < 0
@@ -72,9 +85,9 @@ const Watchlist = () => {
                       : "text-green-600"
                   }`}
                 >
-                  {item.market_cap_change_percentage_24h}%
+                  {formatPercentage(item.market_cap_change_percentage_24h)}%
                 </TableCell>
-                <TableCell>{item.current_price}</TableCell>
+                <TableCell>{formatAmount(item.current_price)}</TableCell>
 
                 <TableCell className="text-right">
                   <Button onClick={()=>handleAddToWatchlist(item.id)} className="h-10 w-10" variant="outline" size="icon">

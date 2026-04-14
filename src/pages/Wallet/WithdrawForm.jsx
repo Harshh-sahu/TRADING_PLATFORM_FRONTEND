@@ -42,7 +42,7 @@ const WithdrawForm = () => {
     <div className="pt-10 space-y-5">
       <div className="flex justify-between items-center rounded-md bg-slate-900 text- text-xl font-bold px-5 py-4">
         <p>Available balance</p>
-        <p>${wallet.userWallet?.balance}</p>
+        <p>₹{wallet.userWallet?.balance}</p>
       </div>
       <div className="flex flex-col items-center">
         <h1 className="">Enter withdrawal amount</h1>
@@ -52,7 +52,7 @@ const WithdrawForm = () => {
             onChange={handleChange}
             value={amount}
             className="withdrawInput py-7 border-none outline-none focus:outline-none px-0 text-2xl text-center "
-            placeholder="$9999"
+            placeholder="₹9999"
             type="number"
           />
         </div>
@@ -82,7 +82,7 @@ const WithdrawForm = () => {
           variant=""
           className="w-full py-7 text-xl"
         >
-          Withdraw {amount && <span className="ml-5">${amount}</span>}
+          Withdraw {amount && <span className="ml-5">₹{amount}</span>}
         </Button>
       </DialogClose>
     </div>

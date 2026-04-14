@@ -60,7 +60,7 @@ const SearchCoin = () => {
         <TableHeader className="py-9">
           <TableRow className="sticky top-0 left-0 right-0 bg-background ">
             <TableHead className="py-3">Market Cap Rank</TableHead>
-            <TableHead>Treading Pair</TableHead>
+            <TableHead>Trading Pair</TableHead>
          
             <TableHead className="text-right">SYMBOL</TableHead>
           </TableRow>
@@ -85,7 +85,7 @@ const SearchCoin = () => {
                 <span> {item.name}</span>
               </TableCell>
 
-              <TableCell className="text-right">${item.symbol}</TableCell>
+              <TableCell className="text-right">₹{item.symbol}</TableCell>
             </TableRow>
           ))}
         </TableBody>

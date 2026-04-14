@@ -20,7 +20,7 @@ import {
   UpdateIcon,
   UploadIcon,
 } from "@radix-ui/react-icons";
-import { DollarSign, WalletIcon } from "lucide-react";
+import { WalletIcon } from "lucide-react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TopupForm from "./TopupForm";
@@ -141,7 +141,7 @@ const Wallet = () => {
           </CardHeader>
           <CardContent>
             <div className="flex items-center ">
-              <DollarSign />
+              <span className="text-2xl font-semibold mr-1">₹</span>
 
               <span className="text-2xl font-semibold">
                 {wallet.userWallet?.balance}
@@ -229,8 +229,7 @@ const Wallet = () => {
                   </div>
                   <div>
                     <p className="flex items-center">
-                      {/* <DollarSign className="h-4 w-4" /> */}
-                      <span className={`${item.amount>0?"text-green-500":"text-red-500"}`}>{item.amount} USD</span>
+                      <span className={`${item.amount>0?"text-green-500":"text-red-500"}`}>₹{item.amount}</span>
                     </p>
                   </div>
                 </Card>

@@ -3,6 +3,11 @@ import ReactApexChart from "react-apexcharts";
 import fetchData, { dataType } from "../Home/fetchMarketData";
 import { convertToUnixTimestamp } from "./ConvertToChartData";
 
+const formatChartValue = (value) =>
+  value === null || value === undefined || value === ""
+    ? "0.00"
+    : Number(value).toFixed(2);
+
 const Chart = () => {
   const [stockData, setStockData] = useState(null);
   // Sample data
@@ -116,6 +121,9 @@ const Chart = () => {
       },
     },
     yaxis: {
+      labels: {
+        formatter: formatChartValue,
+      },
       title: {
         // text: 'Closing Price (USD)',
       },
@@ -132,6 +140,9 @@ const Chart = () => {
     },
     tooltip: {
       theme: "dark", // Tooltip theme (light/dark)
+      y: {
+        formatter: formatChartValue,
+      },
     },
     toolbar: {
       show: true, // Hide the toolbar

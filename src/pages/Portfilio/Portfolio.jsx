@@ -21,8 +21,18 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserAssets } from "@/Redux/Assets/Action";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import TreadingHistory from "./TreadingHistory";
+import TradingHistory from "./TreadingHistory";
 import { useNavigate } from "react-router-dom";
+
+const formatAmount = (value) =>
+  value === null || value === undefined || value === ""
+    ? "-"
+    : Number(value).toFixed(2);
+
+const formatPercentage = (value) =>
+  value === null || value === undefined || value === ""
+    ? "-"
+    : Number(value).toFixed(2);
 
 const tab = ["portfolio", "history"];
 const Portfolio = () => {
@@ -99,8 +109,8 @@ const Portfolio = () => {
                     </Avatar>
                     <span> {item.coin.name}</span>
                   </TableCell>
-                  <TableCell>{item.coin.current_price}</TableCell>
-                  <TableCell>{item.quantity}</TableCell>
+                  <TableCell>{formatAmount(item.coin.current_price)}</TableCell>
+                  <TableCell>{formatAmount(item.quantity)}</TableCell>
                   <TableCell
                     className={`${
                       item.coin.price_change_percentage_24h < 0
@@ -108,7 +118,7 @@ const Portfolio = () => {
                         : "text-green-600"
                     }`}
                   >
-                    {item.coin.price_change_24h}
+                    {formatAmount(item.coin.price_change_24h)}
                   </TableCell>
                   <TableCell
                     className={`${
@@ -117,18 +127,18 @@ const Portfolio = () => {
                         : "text-green-600"
                     }`}
                   >
-                    {item.coin.price_change_percentage_24h}%
+                    {formatPercentage(item.coin.price_change_percentage_24h)}%
                   </TableCell>
 
                   <TableCell className="text-right">
-                    {item.coin.current_price * item.quantity}
+                    {formatAmount(item.coin.current_price * item.quantity)}
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         ) : (
-          <TreadingHistory />
+          <TradingHistory />
         )
         // <div className="flex items-center justify-center h-[70vh]">
         //   <h1 className="text-3xl font-semibold">No History Available</h1>
